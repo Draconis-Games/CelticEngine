@@ -1,4 +1,4 @@
-package com.draconis.physics.math;
+package com.draconisgames.engine.physics.math;
 
 import static java.lang.Math.*;
 
