@@ -1,5 +1,6 @@
 package com.draconisgames.celticengine.rendering;
 
+import com.draconisgames.celticengine.file.TextLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -14,10 +15,16 @@ public class Shader {
 	private int fragmentShader;
 
 
-	public Shader() throws Exception {
+	public Shader() {
 		programId = glCreateProgram();
 		if(programId == 0)
-			throw new Exception("Could not create shader.");
+			logger.error("Could not create shader.");
+	}
+	public Shader(String vertPath, String fragPath){
+		this();
+		createVertexShader(TextLoader.load(vertPath));
+		createFragmentShader(TextLoader.load(fragPath));
+		link();
 	}
 
 	public void createVertexShader(String shaderCode){
@@ -43,14 +50,14 @@ public class Shader {
 			return 0;
 		}
 
-		glAttachShader(shaderId, programId);
+		glAttachShader(programId, shaderId);
 
 		return shaderId;
 	}
 
 	public void link(){
 		glLinkProgram(programId);
-		if (glGetProgrami(programId, GL_LINK_STATUS) == 0) {
+		if (glGetProgrami(programId, GL_LINK_STATUS) == GL_FALSE) {
 			logger.error("Error linking Shader code: " + glGetProgramInfoLog(programId, 1024));
 			return;
 		}
@@ -63,12 +70,12 @@ public class Shader {
 		}
 
 		glValidateProgram(programId);
-		if (glGetProgrami(programId, GL_VALIDATE_STATUS) == 0) {
+		if (glGetProgrami(programId, GL_VALIDATE_STATUS) == GL_FALSE) {
 			System.err.println("Warning validating Shader code: " + glGetProgramInfoLog(programId, 1024));
 		}
 	}
 
-	public void bind(){
+	public void use(){
 		glUseProgram(programId);
 	}
 
@@ -81,5 +88,9 @@ public class Shader {
 		if(programId != 0){
 			glDeleteProgram(programId);
 		}
+	}
+
+	public int getProgramId() {
+		return programId;
 	}
 }

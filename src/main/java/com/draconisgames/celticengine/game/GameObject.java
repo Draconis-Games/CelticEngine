@@ -10,11 +10,11 @@ public abstract class GameObject {
     Transform transform = new Transform();
     List<Renderable> renderables = new ArrayList<>();
 
-    public void init(){
-        renderables.forEach(Renderable::bindVbos);
-    }
 
-    public void bind(){
+    public void addRenderable(Renderable renderable){
+        renderables.add(renderable);
+    }
+    public void init(){
         renderables.forEach(Renderable::bind);
     }
 
@@ -25,4 +25,6 @@ public abstract class GameObject {
     public void delete(){
         renderables.forEach(Renderable::delete);
     }
+
+
 }

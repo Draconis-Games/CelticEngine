@@ -2,6 +2,7 @@ package com.draconisgames.celticengine.game;
 
 import com.draconisgames.celticengine.physics.math.matrices.Matrix4f;
 import com.draconisgames.celticengine.file.ImageLoader;
+import com.draconisgames.celticengine.world.World;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWImage;
 import org.lwjgl.glfw.GLFWVidMode;
@@ -13,6 +14,7 @@ import java.nio.IntBuffer;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryStack.stackPush;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
@@ -20,7 +22,7 @@ public abstract class GameWindow {
 
     protected int width, height;
 
-    protected float delta;
+    private float delta;
     private long lastFrameTime;
     protected int fps;
 
@@ -33,6 +35,8 @@ public abstract class GameWindow {
     protected boolean fullScreen;
     protected boolean isResized;
     protected boolean resizable = true;
+
+    private World loadedWorld = new World();
 
     protected long window;
 
@@ -88,6 +92,16 @@ public abstract class GameWindow {
 
     }
 
+    public void loadWorld(World loadedWorld) {
+        this.loadedWorld.cleanup();
+        this.loadedWorld = loadedWorld;
+        this.loadedWorld.load();
+    }
+
+    public World getWorld() {
+        return loadedWorld;
+    }
+
     public void setIconImage(String path) {
         GLFWImage image = GLFWImage.malloc(); GLFWImage.Buffer imagebf = GLFWImage.malloc(1);
         ImageLoader imageLoader = ImageLoader.loadImage(path);
@@ -129,7 +143,10 @@ public abstract class GameWindow {
 
         while (!glfwWindowShouldClose(window)) {
             glfwPollEvents();
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
+            loadedWorld.render();
             update(delta);
+            glfwSwapBuffers(window);
             delta = ((float) System.nanoTime() - lastFrameTime) / 1000000000f;
             fps = Math.round(1000000000f / (System.nanoTime() - lastFrameTime));
             lastFrameTime = System.nanoTime();
