@@ -6,7 +6,7 @@ import static java.lang.Math.*;
 
 public class Quaternion {
 
-    public float w, x, y, z;
+    private float w, x, y, z;
 
     public Quaternion(float w, float x, float y, float z) {
         this.w = w;
@@ -18,7 +18,7 @@ public class Quaternion {
     public Quaternion() {
         this(0, 0, 0, 0);
     }
-    
+
     public static Quaternion fromRadEuler(float roll, float pitch, float yaw) {
         float cy = (float) cos(yaw * 0.5);
         float sy = (float) sin(yaw * 0.5);
@@ -36,20 +36,19 @@ public class Quaternion {
         return q;
     }
 
-    public static Quaternion fromDegEuler(float x, float y, float z) {
-        Vector3 v = new Vector3(x, y, z);
-        v.toRad();
-        return fromRadEuler(v.x, v.y, v.z);
+    public static Quaternion fromEuler(float x, float y, float z) {
+        x /= 180/Math.PI;
+        y /= 180/Math.PI;
+        z /= 180/Math.PI;
+        return fromRadEuler(x, y, z);
     }
 
-    public static Quaternion fromDegVector(Vector3 vi) {
-        Vector3 v = new Vector3(vi.x, vi.y, vi.z);
-        v.toRad();
-        return fromRadEuler(v.x, v.y, v.z);
+    public static Quaternion fromEuler(Vector3 v) {
+        return fromEuler(v.getX(), v.getY(), v.getZ());
     }
 
-    public static Quaternion fromRadVector(Vector3 v) {
-        return fromRadEuler(v.x, v.y, v.z);
+    public static Quaternion fromRadEuler(Vector3 v) {
+        return fromRadEuler(v.getX(), v.getY(), v.getZ());
     }
 
     public float magnitude() {
@@ -108,4 +107,35 @@ public class Quaternion {
         return new Matrix4f(m);
     }
 
+    public float getW() {
+        return w;
+    }
+
+    public void setW(float w) {
+        this.w = w;
+    }
+
+    public float getX() {
+        return x;
+    }
+
+    public void setX(float x) {
+        this.x = x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
+    public void setY(float y) {
+        this.y = y;
+    }
+
+    public float getZ() {
+        return z;
+    }
+
+    public void setZ(float z) {
+        this.z = z;
+    }
 }

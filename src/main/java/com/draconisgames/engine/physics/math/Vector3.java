@@ -2,7 +2,7 @@ package com.draconisgames.engine.physics.math;
 
 public class Vector3 {
 
-    public float x, y, z;
+    private float x, y, z;
 
     public Vector3(float x, float y, float z) {
         this.x = x;
@@ -10,21 +10,33 @@ public class Vector3 {
         this.z = z;
     }
 
+    public Vector3() {}
+
     public String toString() {
         return x + ", " + y + ", " + z;
     }
 
-    public Vector3 toDegrees() {
-        x *= 180/Math.PI;
-        y *= 180/Math.PI;
-        z *= 180/Math.PI;
-        return this;
+    public float getX() {
+        return x;
     }
 
-    public Vector3 toRad() {
-        x /= 180/Math.PI;
-        y /= 180/Math.PI;
-        z /= 180/Math.PI;
-        return this;
+    public void setX(float x) {
+        this.x = x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
+    public void setY(float y) {
+        this.y = y;
+    }
+
+    public float getZ() {
+        return z;
+    }
+
+    public void setZ(float z) {
+        this.z = z;
     }
 }
