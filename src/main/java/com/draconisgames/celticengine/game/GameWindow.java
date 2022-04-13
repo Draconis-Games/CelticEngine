@@ -26,7 +26,7 @@ public abstract class GameWindow {
 
     private GLFWWindowSizeCallback sizeCallback;
 
-    private String title;
+    private final String title;
 
     public Matrix4f projectionMatrix;
 
@@ -37,9 +37,7 @@ public abstract class GameWindow {
     protected long window;
 
     public GameWindow(int width, int height, String title) {
-        this.width = width;
-        this.height = height;
-        this.title = title;
+        this(width, height, title, true);
     }
 
     public GameWindow(int width, int height, String title, boolean resizeable) {
@@ -47,21 +45,22 @@ public abstract class GameWindow {
         this.height = height;
         this.title = title;
         this.resizable = resizeable;
-    }
 
-    public void run() {
         if (!glfwInit()) {
             throw new IllegalStateException("Unable to initialize GLFW");
         }
 
         glfwDefaultWindowHints();
-		glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
-		glfwWindowHint(GLFW_RESIZABLE, resizable ? GLFW_TRUE : GLFW_FALSE);
+        glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
+        glfwWindowHint(GLFW_RESIZABLE, resizable ? GLFW_TRUE : GLFW_FALSE);
 
         window = glfwCreateWindow(width, height, title, NULL, NULL);
         if (window == NULL) {
             throw new RuntimeException("Failed to create GameWindow");
         }
+    }
+
+    public void run() {
 
         createCallbacks();
 
