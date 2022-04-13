@@ -125,7 +125,6 @@ public abstract class GameWindow {
     }
 
     private void loop() {
-
         GL.createCapabilities();
 
         lastFrameTime = System.nanoTime();

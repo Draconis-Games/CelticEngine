@@ -1,5 +1,7 @@
 package com.draconisgames.engine.physics.math;
 
+import com.draconisgames.engine.physics.math.matrices.Matrix4f;
+
 import static java.lang.Math.*;
 
 public class Quaternion {
@@ -74,6 +76,36 @@ public class Quaternion {
 
     public String toString() {
         return w + ", " + x + ", " + y + ", " + z;
+    }
+
+    public Matrix4f toMatrix() {
+        float x2 = x * x;
+        float xy = x * y;
+        float xz = x * z;
+        float xw = x * w;
+        float y2 = y * y;
+        float yz = y * z;
+        float yw = y * w;
+        float z2 = z * z;
+        float zw = z * w;
+
+        float[][] m = new float[4][4];
+
+        m[0][0] = 1 - 2 * (y2 + z2);
+        m[0][1] = 2 * (xy - zw);
+        m[0][2] = 2 * (xz + yw);
+
+        m[1][0] = 2 * (xy + zw);
+        m[1][1] = 1 - 2 * (x2 + z2);
+        m[1][2] = 2 * (yz - xw);
+
+        m[2][0] = 2 * (xz - yw);
+        m[2][1] = 2 * (yz + xw);
+        m[2][2] = 1 - 2 * (x2 + y2);
+
+        m[3][3] = 1;
+
+        return new Matrix4f(m);
     }
 
 }

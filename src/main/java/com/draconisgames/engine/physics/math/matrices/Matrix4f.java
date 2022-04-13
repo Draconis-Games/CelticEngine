@@ -159,7 +159,7 @@ public class Matrix4f {
         return new Position(matrix[0][3], matrix[1][3], matrix[2][3]);
     }
 
-    public Matrix4f fromTransform(Transform t) {
+    public static Matrix4f fromTransform(Transform t) {
         float[][] m = new float[4][4];
 
         float x2 = t.rot.x * t.rot.x;
