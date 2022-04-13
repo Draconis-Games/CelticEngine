@@ -13,8 +13,6 @@ import java.nio.IntBuffer;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
 import static org.lwjgl.system.MemoryStack.stackPush;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
@@ -23,8 +21,7 @@ public abstract class GameWindow {
     protected int width, height;
 
     protected float delta;
-    protected long lastFrameTime;
-    protected long fixedUpdateTimer;
+    private long lastFrameTime;
     protected int fps;
 
     private GLFWWindowSizeCallback sizeCallback;
@@ -37,7 +34,7 @@ public abstract class GameWindow {
     protected boolean isResized;
     protected boolean resizable = true;
 
-    private long window;
+    protected long window;
 
     public GameWindow(int width, int height, String title) {
         this.width = width;
@@ -129,16 +126,16 @@ public abstract class GameWindow {
 
         lastFrameTime = System.nanoTime();
 
-        while ( !glfwWindowShouldClose(window) ) {
-            glfwPollEvents();
+        init();
 
-            if(fixedUpdateTimer < System.nanoTime()){
-                fixedUpdateTimer = System.nanoTime() + 50000000;
-                fixedUpdate();
-            }
+        while (!glfwWindowShouldClose(window)) {
+            glfwPollEvents();
             update(delta);
-            delta = ((float) System.nanoTime() / lastFrameTime) / 1000000000f;
+            delta = ((float) System.nanoTime() - lastFrameTime) / 1000000000f;
+            fps = Math.round(1000000000f / (System.nanoTime() - lastFrameTime));
+            lastFrameTime = System.nanoTime();
         }
+        remove();
     }
 
     public void remove() {
@@ -150,7 +147,6 @@ public abstract class GameWindow {
 
     public abstract void update(float delta);
 
-    public abstract void fixedUpdate();
-
+    public abstract void init();
 
 }
