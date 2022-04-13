@@ -2,14 +2,19 @@ package com.draconisgames.engine.game;
 
 import com.draconisgames.engine.physics.math.matrices.Matrix4f;
 import com.draconisgames.engine.rendering.ImageLoader;
+import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWImage;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.glfw.GLFWWindowSizeCallback;
+import org.lwjgl.opengl.GL;
 import org.lwjgl.system.MemoryStack;
 
 import java.nio.IntBuffer;
 
+import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
 import static org.lwjgl.system.MemoryStack.stackPush;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
@@ -83,6 +88,8 @@ public abstract class GameWindow {
 
         glfwShowWindow(window);
 
+        loop();
+
     }
 
     public void setIconImage(String path) {
@@ -107,6 +114,8 @@ public abstract class GameWindow {
 				glfwSetWindowShouldClose(window, true);
 		});
 
+        glfwSetErrorCallback(GLFWErrorCallback.createPrint(System.out));
+
     }
 
     private void setDimensions(int w, int h) {
@@ -115,11 +124,22 @@ public abstract class GameWindow {
         isResized = true;
     }
 
-    //temp
+    private void loop() {
 
+        GL.createCapabilities();
 
-    public long getWindow() {
-        return window;
+        while ( !glfwWindowShouldClose(window) ) {
+            glfwPollEvents();
+        }
     }
+
+    public void remove() {
+        glfwFreeCallbacks(window);
+        glfwDestroyWindow(window);
+        glfwTerminate();
+        glfwSetErrorCallback(null).free();
+    }
+
+    public abstract void update();
 
 }
