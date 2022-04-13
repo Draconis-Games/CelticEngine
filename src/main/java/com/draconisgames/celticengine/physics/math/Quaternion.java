@@ -37,9 +37,9 @@ public class Quaternion {
     }
 
     public static Quaternion fromEuler(float x, float y, float z) {
-        x /= 180/Math.PI;
-        y /= 180/Math.PI;
-        z /= 180/Math.PI;
+        x = (float) Math.toRadians(x);
+        y = (float) Math.toRadians(y);
+        z = (float) Math.toRadians(z);
         return fromRadEuler(x, y, z);
     }
 

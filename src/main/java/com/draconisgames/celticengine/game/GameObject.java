@@ -1,7 +1,6 @@
 package com.draconisgames.celticengine.game;
 
 import com.draconisgames.celticengine.physics.math.Transform;
-import com.draconisgames.celticengine.rendering.Mesh;
 import com.draconisgames.celticengine.rendering.Renderable;
 
 import java.util.ArrayList;
