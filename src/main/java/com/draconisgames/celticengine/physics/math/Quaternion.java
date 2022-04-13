@@ -16,7 +16,7 @@ public class Quaternion {
     }
     
     public Quaternion() {
-        this(0, 0, 0, 0);
+        this(1, 0, 0, 0);
     }
 
     public static Quaternion fromRadEuler(float roll, float pitch, float yaw) {

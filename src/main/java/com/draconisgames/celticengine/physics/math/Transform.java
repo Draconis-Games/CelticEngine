@@ -8,7 +8,7 @@ public class Transform {
 
     public Transform() {
         pos = new Vector3();
-        rot = Quaternion.fromEuler(0, 0, 0);
+        rot = new Quaternion();
         scale = new Vector3();
     }
 

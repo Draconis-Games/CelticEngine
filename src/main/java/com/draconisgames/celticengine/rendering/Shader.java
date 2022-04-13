@@ -5,8 +5,8 @@ import org.apache.logging.log4j.Logger;
 
 import static org.lwjgl.opengl.GL20.*;
 
-public class ShaderProgram {
-	Logger logger = LogManager.getLogger(ShaderProgram.class);
+public class Shader {
+	Logger logger = LogManager.getLogger(Shader.class);
 
 	private final int programId;
 
@@ -14,7 +14,7 @@ public class ShaderProgram {
 	private int fragmentShader;
 
 
-	public ShaderProgram() throws Exception {
+	public Shader() throws Exception {
 		programId = glCreateProgram();
 		if(programId == 0)
 			throw new Exception("Could not create shader.");
@@ -23,6 +23,7 @@ public class ShaderProgram {
 	public void createVertexShader(String shaderCode){
 		vertexShader = createShader(shaderCode,GL_VERTEX_SHADER);
 	}
+
 	public void createFragmentShader(String shaderCode){
 		fragmentShader = createShader(shaderCode,GL_FRAGMENT_SHADER);
 	}
