@@ -36,7 +36,11 @@ public class TranslationMatrix extends Matrix4f {
     }
 
     public TranslationMatrix(float[][] m) {
-        matrix = m;
+        super(m);
+    }
+
+    public TranslationMatrix() {
+        super();
     }
 
     public Quaternion toQuaternion() {
@@ -49,7 +53,7 @@ public class TranslationMatrix extends Matrix4f {
         return q;
     }
 
-    public TranslationMatrix fromScale(Vector3 scale) {
+    public static TranslationMatrix fromScale(Vector3 scale) {
         float[][] m = new float[4][4];
         m[0][0] = scale.getX();
         m[1][1] = scale.getY();

@@ -6,6 +6,10 @@ public class ProjectionMatrix extends Matrix4f {
         matrix = new float[4][4];
     }
 
+    public ProjectionMatrix(float[][] m) {
+        super(m);
+    }
+
     public ProjectionMatrix(float aspectRatio, float fov, float zNear, float zFar) {
         float t = (float) (1/Math.tan(fov/2));
         float zm = zFar - zNear;
