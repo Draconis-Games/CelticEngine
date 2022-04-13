@@ -1,6 +1,6 @@
-package com.draconisgames.engine.physics.math;
+package com.draconisgames.celticengine.physics.math;
 
-import com.draconisgames.engine.physics.math.matrices.Matrix4f;
+import com.draconisgames.celticengine.physics.math.matrices.Matrix4f;
 
 import static java.lang.Math.*;
 

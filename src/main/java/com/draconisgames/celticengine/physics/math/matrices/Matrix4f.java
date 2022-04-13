@@ -1,6 +1,6 @@
-package com.draconisgames.engine.physics.math.matrices;
+package com.draconisgames.celticengine.physics.math.matrices;
 
-import com.draconisgames.engine.physics.math.*;
+import com.draconisgames.celticengine.physics.math.*;
 
 import static java.lang.Math.sqrt;
 

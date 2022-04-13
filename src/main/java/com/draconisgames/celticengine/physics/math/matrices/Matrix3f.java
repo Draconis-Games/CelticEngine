@@ -1,8 +1,4 @@
-package com.draconisgames.engine.physics.math.matrices;
-
-import com.draconisgames.engine.physics.math.Quaternion;
-
-import static java.lang.Math.sqrt;
+package com.draconisgames.celticengine.physics.math.matrices;
 
 public class Matrix3f {
 

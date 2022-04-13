@@ -1,7 +1,7 @@
-package com.draconisgames.engine.game;
+package com.draconisgames.celticengine.game;
 
-import com.draconisgames.engine.physics.math.matrices.Matrix4f;
-import com.draconisgames.engine.rendering.ImageLoader;
+import com.draconisgames.celticengine.physics.math.matrices.Matrix4f;
+import com.draconisgames.celticengine.file.ImageLoader;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWImage;
 import org.lwjgl.glfw.GLFWVidMode;

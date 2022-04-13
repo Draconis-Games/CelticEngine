@@ -1,4 +1,4 @@
-package com.draconisgames.engine.physics.math;
+package com.draconisgames.celticengine.physics.math;
 
 public class Vector3 {
 
