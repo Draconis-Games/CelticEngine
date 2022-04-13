@@ -17,7 +17,7 @@ public class Quaternion {
         this(0, 0, 0, 0);
     }
     
-    public static Quaternion fromEuler(float roll, float pitch, float yaw) {
+    public static Quaternion fromRadEuler(float roll, float pitch, float yaw) {
         float cy = (float) cos(yaw * 0.5);
         float sy = (float) sin(yaw * 0.5);
         float cp = (float) cos(pitch * 0.5);
@@ -34,14 +34,20 @@ public class Quaternion {
         return q;
     }
 
+    public static Quaternion fromDegEuler(float x, float y, float z) {
+        Vector3 v = new Vector3(x, y, z);
+        v.toRad();
+        return fromRadEuler(v.x, v.y, v.z);
+    }
+
     public static Quaternion fromDegVector(Vector3 vi) {
         Vector3 v = new Vector3(vi.x, vi.y, vi.z);
         v.toRad();
-        return fromEuler(v.x, v.y, v.z);
+        return fromRadEuler(v.x, v.y, v.z);
     }
 
     public static Quaternion fromRadVector(Vector3 v) {
-        return fromEuler(v.x, v.y, v.z);
+        return fromRadEuler(v.x, v.y, v.z);
     }
 
     public float magnitude() {
