@@ -24,7 +24,7 @@ public abstract class GameWindow {
 
     protected float delta;
     protected long lastFrameTime;
-    protected long time;
+    protected long fixedUpdateTimer;
     protected int fps;
 
     private GLFWWindowSizeCallback sizeCallback;
@@ -128,8 +128,17 @@ public abstract class GameWindow {
 
         GL.createCapabilities();
 
+        lastFrameTime = System.nanoTime();
+
         while ( !glfwWindowShouldClose(window) ) {
             glfwPollEvents();
+
+            if(fixedUpdateTimer < System.nanoTime()){
+                fixedUpdateTimer = System.nanoTime() + 50000000;
+                fixedUpdate();
+            }
+            update(delta);
+            delta = ((float) System.nanoTime() / lastFrameTime) / 1000000000f;
         }
     }
 
@@ -140,6 +149,9 @@ public abstract class GameWindow {
         glfwSetErrorCallback(null).free();
     }
 
-    public abstract void update();
+    public abstract void update(float delta);
+
+    public abstract void fixedUpdate();
+
 
 }
