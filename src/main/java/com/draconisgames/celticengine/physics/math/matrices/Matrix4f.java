@@ -8,7 +8,11 @@ public class Matrix4f {
 
     public float[][] matrix = new float[4][4];
 
-    public Matrix4f() {}
+    public Matrix4f() {
+        for (int i = 0; i < 4; i++) {
+            matrix[i][i] = 1;
+        }
+    }
 
     public Matrix4f(float[][] matrix) {
         this.matrix = matrix;

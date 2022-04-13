@@ -40,7 +40,7 @@ public class ImageLoader {
         URL url = ImageLoader.class.getClassLoader().getResource(path);
 
         if (url == null || !(new File(url.getPath()).isFile())){
-            logger.error( "\"" + ImageLoader.class.getClassLoader().getResource(path) + "\" is an invalid file path");
+            logger.error( "\"" + path + "\" is an invalid file path");
             path = Objects.requireNonNull(ImageLoader.class.getClassLoader().getResource("assets/missing-texture.png")).getPath();
         } else {
             path = url.getPath();

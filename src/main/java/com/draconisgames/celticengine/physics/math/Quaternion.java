@@ -19,7 +19,7 @@ public class Quaternion {
         this(1, 0, 0, 0);
     }
 
-    public static Quaternion fromRadEuler(float roll, float pitch, float yaw) {
+    public static Quaternion fromEuler(float roll, float pitch, float yaw) {
         float cy = (float) cos(yaw * 0.5);
         float sy = (float) sin(yaw * 0.5);
         float cp = (float) cos(pitch * 0.5);
@@ -36,19 +36,19 @@ public class Quaternion {
         return q;
     }
 
-    public static Quaternion fromEuler(float x, float y, float z) {
+    public static Quaternion fromDegEuler(float x, float y, float z) {
         x = (float) Math.toRadians(x);
         y = (float) Math.toRadians(y);
         z = (float) Math.toRadians(z);
-        return fromRadEuler(x, y, z);
+        return fromEuler(x, y, z);
+    }
+
+    public static Quaternion fromDegEuler(Vector3 v) {
+        return fromDegEuler(v.getX(), v.getY(), v.getZ());
     }
 
     public static Quaternion fromEuler(Vector3 v) {
         return fromEuler(v.getX(), v.getY(), v.getZ());
-    }
-
-    public static Quaternion fromRadEuler(Vector3 v) {
-        return fromRadEuler(v.getX(), v.getY(), v.getZ());
     }
 
     public float magnitude() {
@@ -63,6 +63,17 @@ public class Quaternion {
         z /= magnitude;
 
         return this;
+    }
+
+    public Vector3 toDegVector() {
+        float a, b, c;
+        a = (float) atan2(2 * (w * x + y * z), w * w - x * x - y * y + z * z);
+        b = (float) asin(2 * (w * y - x * z));
+        c = (float) atan2(2 * (w * z + x * y), w * w + x * x - y * y - z * z);
+        a = (float) Math.toDegrees(a);
+        b = (float) Math.toDegrees(b);
+        c = (float) Math.toDegrees(c);
+        return new Vector3(a, b, c);
     }
 
     public Vector3 toVector() {

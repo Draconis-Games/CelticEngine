@@ -18,12 +18,6 @@ public class Transform {
         this.scale = scale;
     }
 
-    public Transform(Vector3 pos, Vector3 scale, Vector3 r) {
-        this.pos = pos;
-        this.scale = scale;
-        rot = Quaternion.fromEuler(r);
-    }
-
     public Vector3 getPosition() {
         return pos;
     }
