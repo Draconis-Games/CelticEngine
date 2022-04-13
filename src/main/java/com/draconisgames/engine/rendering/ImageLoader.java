@@ -41,9 +41,13 @@ public class ImageLoader {
 
         if (url == null || !(new File(url.getPath()).isFile())){
             logger.error( "\"" + ImageLoader.class.getClassLoader().getResource(path) + "\" is an invalid file path");
-            path = Objects.requireNonNull(ImageLoader.class.getClassLoader().getResource("assets/missing-texture.png")).getPath().substring(1);
+            path = Objects.requireNonNull(ImageLoader.class.getClassLoader().getResource("assets/missing-texture.png")).getPath();
         } else {
-            path = url.getPath().substring(1);
+            path = url.getPath();
+        }
+
+        if (System.getProperty("os.name").toLowerCase().contains("win")) {
+            path = path.substring(1);
         }
 
         try (MemoryStack stack = MemoryStack.stackPush()) {
