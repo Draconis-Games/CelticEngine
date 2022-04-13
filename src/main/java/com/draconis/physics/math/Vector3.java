@@ -13,4 +13,18 @@ public class Vector3 {
     public String toString() {
         return x + ", " + y + ", " + z;
     }
+
+    public Vector3 toDegrees() {
+        x *= 180/Math.PI;
+        y *= 180/Math.PI;
+        z *= 180/Math.PI;
+        return this;
+    }
+
+    public Vector3 toRad() {
+        x /= 180/Math.PI;
+        y /= 180/Math.PI;
+        z /= 180/Math.PI;
+        return this;
+    }
 }

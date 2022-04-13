@@ -6,30 +6,42 @@ public class Quaternion {
 
     public float w, x, y, z;
 
-    public static Quaternion fromEuler(float roll, float pitch, float yaw) {
-        float cy = (float) cos(roll * 0.5f);
-        float sy = (float) sin(roll * 0.5f);
-        float cp = (float) cos(pitch * 0.5f);
-        float sp = (float) sin(pitch * 0.5f);
-        float cr = (float) cos(yaw * 0.5f);
-        float sr = (float) sin(yaw * 0.5f);
-
-        float a = cr * cp * cy + sr * sp * sy;
-        float b = sr * cp * cy - cr * sp * sy;
-        float c = cr * sp * cy + sr * cp * sy;
-        float d = cr * cp * sy - sr * sp * cy;
-        return new Quaternion(a, b, c, d);
-    }
-
-    public static Quaternion fromVector(Vector3 v) {
-        return fromEuler(v.x, v.y, v.z);
-    }
-
     public Quaternion(float w, float x, float y, float z) {
         this.w = w;
         this.x = x;
         this.y = y;
         this.z = z;
+    }
+    
+    public Quaternion() {
+        this(0, 0, 0, 0);
+    }
+    
+    public static Quaternion fromEuler(float roll, float pitch, float yaw) {
+        float cy = (float) cos(yaw * 0.5);
+        float sy = (float) sin(yaw * 0.5);
+        float cp = (float) cos(pitch * 0.5);
+        float sp = (float) sin(pitch * 0.5);
+        float cr = (float) cos(roll * 0.5);
+        float sr = (float) sin(roll * 0.5);
+
+        Quaternion q = new Quaternion();
+
+        q.w = cr * cp * cy + sr * sp * sy;
+        q.x = sr * cp * cy - cr * sp * sy;
+        q.y = cr * sp * cy + sr * cp * sy;
+        q.z = cr * cp * sy - sr * sp * cy;
+        return q;
+    }
+
+    public static Quaternion fromDegVector(Vector3 vi) {
+        Vector3 v = new Vector3(vi.x, vi.y, vi.z);
+        v.toRad();
+        return fromEuler(v.x, v.y, v.z);
+    }
+
+    public static Quaternion fromRadVector(Vector3 v) {
+        return fromEuler(v.x, v.y, v.z);
     }
 
     public float magnitude() {
