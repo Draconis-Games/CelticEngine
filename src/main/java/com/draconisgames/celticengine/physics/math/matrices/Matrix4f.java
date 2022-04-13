@@ -135,7 +135,6 @@ public class Matrix4f {
         m.matrix[0][0] = scale.getX();
         m.matrix[1][1] = scale.getY();
         m.matrix[2][2] = scale.getZ();
-        m.matrix[3][3] = 1;
         return m;
     }
 
@@ -149,7 +148,6 @@ public class Matrix4f {
 
     public static Matrix4f fromPosition(Vector3 pos) {
         Matrix4f m = new Matrix4f();
-        m.matrix[0][0] = m.matrix[1][1] = m.matrix[2][2] = m.matrix[3][3] = 1;
         m.matrix[0][3] = pos.getX();
         m.matrix[1][3] = pos.getY();
         m.matrix[2][3] = pos.getZ();
