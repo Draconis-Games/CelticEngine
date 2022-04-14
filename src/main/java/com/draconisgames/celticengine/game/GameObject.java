@@ -11,6 +11,12 @@ public abstract class GameObject {
     List<Renderable> renderables = new ArrayList<>();
 
 
+    public GameObject(Transform transform) {
+        this.transform = transform;
+    }
+
+    public GameObject() {}
+
     public void addRenderable(Renderable renderable){
         renderables.add(renderable);
     }

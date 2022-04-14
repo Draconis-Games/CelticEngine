@@ -26,6 +26,8 @@ public abstract class GameWindow {
     private long lastFrameTime;
     protected int fps;
 
+    protected float aspectRatio;
+
     private GLFWWindowSizeCallback sizeCallback;
 
     private final String title;
@@ -49,6 +51,7 @@ public abstract class GameWindow {
         this.height = height;
         this.title = title;
         this.resizable = resizeable;
+        aspectRatio = width / height;
 
         if (!glfwInit()) {
             throw new IllegalStateException("Unable to initialize GLFW");
@@ -116,6 +119,7 @@ public abstract class GameWindow {
             @Override
             public void invoke(long window, int width, int height) {
                 setDimensions(width, height);
+                aspectRatio = width / height;
             }
         };
 

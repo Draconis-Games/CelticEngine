@@ -89,6 +89,25 @@ public class Matrix4f {
         return s.substring(0, s.length() - 3);
     }
 
+    public static Matrix4f projectionMatrix(float aspectRatio, float fov, float zNear, float zFar) {
+        if (fov <= 0) {
+            throw new IllegalArgumentException("FOV cannot be smaller than 0!");
+        }
+        if (aspectRatio == 0) {
+            throw new IllegalArgumentException("Aspect Ratio cannot be 0!");
+        }
+        float t = (float) (1/Math.tan(fov/2));
+        float zm = zFar - zNear;
+        float zp = zFar + zNear;
+        float m[][] = new float[4][4];
+        m[0][0] = t/aspectRatio;
+        m[1][1] = t;
+        m[2][2] = -zp/zm;
+        m[3][2] = -(2*zFar*zNear)/zm;
+        m[2][3] = 1;
+        return new Matrix4f(m);
+    }
+
     public float[][] getMatrix() {
         return matrix;
     }
