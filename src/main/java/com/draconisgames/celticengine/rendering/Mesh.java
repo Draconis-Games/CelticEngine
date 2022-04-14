@@ -21,7 +21,7 @@ public class Mesh implements Renderable {
     Shader shader;
 
     int vaoID;
-    int vertexVboId;
+    int positionBuffer;
     int uvVboId;
     int normalVboId;
 
@@ -44,46 +44,30 @@ public class Mesh implements Renderable {
 
     @Override
     public void bind() {
-        vertexVboId = glGenBuffers();
-        glBindBuffer(GL_ARRAY_BUFFER, vertexVboId);
-        glBufferData(vertexVboId, vertices, GL_STATIC_DRAW);
-
-        uvVboId = glGenBuffers();
-        glBindBuffer(GL_ARRAY_BUFFER, uvVboId);
-        glBufferData(uvVboId, texCoords, GL_STATIC_DRAW);
-
-        normalVboId = glGenBuffers();
-        glBindBuffer(GL_ARRAY_BUFFER, normalVboId);
-        glBufferData(normalVboId, normals, GL_STATIC_DRAW);
-
-        indicesId = glGenBuffers();
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indicesId);
-        glBufferData(indicesId, indices, GL_STATIC_DRAW);
-
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
 
         vaoID = glGenVertexArrays();
         glBindVertexArray(vaoID);
 
+        // Position VBO
+        positionBuffer = glGenBuffers();
+        glBindBuffer(GL_ARRAY_BUFFER, positionBuffer);
+        glBufferData(GL_ARRAY_BUFFER, vertices, GL_STATIC_DRAW);
         glEnableVertexAttribArray(0);
-        glBindBuffer(GL_ARRAY_BUFFER, vertexVboId);
-        glVertexAttribPointer(0,3,GL_FLOAT,false,0,0);
-        glBindAttribLocation(shader.getProgramId(),0,"in_position");
+        glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0);
 
+        // Colour VBO
+        normalVboId = glGenBuffers();
+        glBindBuffer(GL_ARRAY_BUFFER, normalVboId);
+        glBufferData(GL_ARRAY_BUFFER, normals, GL_STATIC_DRAW);
         glEnableVertexAttribArray(1);
-        glBufferData(uvVboId, texCoords, GL_STATIC_DRAW);
-        glVertexAttribPointer(1,2,GL_FLOAT,false,0,0);
-        glBindAttribLocation(shader.getProgramId(),1,"in_texture");
+        glVertexAttribPointer(1, 3, GL_FLOAT, false, 0, 0);
 
-        glEnableVertexAttribArray(2);
-        glBufferData(normalVboId, normals, GL_STATIC_DRAW);
-        glVertexAttribPointer(2,3,GL_FLOAT,false,0,0);
-        glBindAttribLocation(shader.getProgramId(),2,"in_normal");
-
+        // Index VBO
+        indicesId = glGenBuffers();
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indicesId);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices, GL_STATIC_DRAW);
 
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
     }
 
@@ -91,6 +75,8 @@ public class Mesh implements Renderable {
     public void render() {
         shader.use();
         glBindVertexArray(vaoID);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indicesId);
+
 
         glDrawElements(GL_TRIANGLES, numbOfIndices, GL_UNSIGNED_INT, 0);
 

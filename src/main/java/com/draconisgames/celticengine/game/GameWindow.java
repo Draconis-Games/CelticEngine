@@ -140,6 +140,7 @@ public abstract class GameWindow {
         lastFrameTime = System.nanoTime();
 
         init();
+        glEnable(GL_DEPTH_TEST);
 
         while (!glfwWindowShouldClose(window)) {
             glfwPollEvents();

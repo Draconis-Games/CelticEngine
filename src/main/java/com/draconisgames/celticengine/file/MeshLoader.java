@@ -25,8 +25,8 @@ public class MeshLoader {
 
         try {
             InputStream inputStream = new FileInputStream(new File(url.toURI()));
-            Obj obj = ObjUtils.convertToRenderable(ObjReader.read(inputStream));
-            return new Mesh(ObjData.getFaceVertexIndices(obj), ObjData.getVertices(obj), ObjData.getTexCoords(obj, 2), ObjData.getNormals(obj),ObjData.getTotalNumFaceVertices(obj));
+            Obj data = ObjUtils.convertToRenderable(ObjReader.read(inputStream));
+            return new Mesh(ObjData.getFaceVertexIndices(data), ObjData.getVertices(data), ObjData.getTexCoords(data, 2), ObjData.getNormals(data),ObjData.getTotalNumFaceVertices(data));
         } catch (URISyntaxException | IOException e) {
             logger.error("Failed to load file: " + path);
             return null;
