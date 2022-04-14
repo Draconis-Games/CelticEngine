@@ -11,7 +11,8 @@ public class World {
 
 	List<GameObject> gameObjects = new ArrayList<>();
 
-	private Camera activeCam;
+	//TODO: Make private (send into render method)
+	public static Camera activeCam;
 
 	public void addGameObject(GameObject... gameObject){
 		gameObjects.addAll(List.of(gameObject));

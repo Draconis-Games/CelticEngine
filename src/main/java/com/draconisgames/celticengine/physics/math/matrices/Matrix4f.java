@@ -1,11 +1,5 @@
 package com.draconisgames.celticengine.physics.math.matrices;
 
-import com.draconisgames.celticengine.physics.math.*;
-
-import java.util.Arrays;
-
-import static java.lang.Math.sqrt;
-
 public class Matrix4f {
 
     protected float[][] matrix = new float[4][4];
@@ -42,7 +36,7 @@ public class Matrix4f {
         return flatMap;
     }
 
-    public void multiply(Matrix4f m) {
+    public Matrix4f multiply(Matrix4f m) {
         float[][] nm = new float[4][4];
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
@@ -50,6 +44,7 @@ public class Matrix4f {
             }
         }
         matrix = nm;
+        return this;
     }
 
     public static Matrix4f multiply(Matrix4f m1, Matrix4f m2) {
@@ -62,10 +57,11 @@ public class Matrix4f {
         return new Matrix4f(nm);
     }
 
-    public void add(Matrix4f m) {
+    public Matrix4f add(Matrix4f m) {
         for (int i = 0; i < 16; i++) {
             matrix[(int) i / 4][i % 4] += m.matrix[(int) i / 4][i % 4];
         }
+        return this;
     }
 
     public static Matrix4f add(Matrix4f m1, Matrix4f m2) {
@@ -76,10 +72,11 @@ public class Matrix4f {
         return new Matrix4f(nm);
     }
 
-    public void subtract(Matrix4f m) {
+    public Matrix4f subtract(Matrix4f m) {
         for (int i = 0; i < 16; i++) {
             matrix[(int) i / 4][i % 4] -= m.matrix[(int) i / 4][i % 4];
         }
+        return this;
     }
 
     public static Matrix4f subtract(Matrix4f m1, Matrix4f m2) {

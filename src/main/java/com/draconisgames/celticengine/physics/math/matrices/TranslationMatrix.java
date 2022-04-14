@@ -81,7 +81,7 @@ public class TranslationMatrix extends Matrix4f {
         return new Vector3(matrix[0][3], matrix[1][3], matrix[2][3]);
     }
 
-    public TranslationMatrix(Transform t) {
+    /*public TranslationMatrix(Transform t) {
 
         float x2 = t.getRotation().getX() * t.getRotation().getX();
         float xy = t.getRotation().getX() * t.getRotation().getY();
@@ -108,6 +108,13 @@ public class TranslationMatrix extends Matrix4f {
         matrix[0][3] = t.getPosition().getX();
         matrix[1][3] = t.getPosition().getY();
         matrix[2][3] = t.getPosition().getZ();
+    }*/
+
+    public TranslationMatrix(Transform t) {
+        TranslationMatrix p = TranslationMatrix.fromPosition(t.getPosition());
+        TranslationMatrix r = new TranslationMatrix(t.getRotation());
+        TranslationMatrix s = TranslationMatrix.fromScale(t.getScale());
+        matrix = p.multiply(r).multiply(s).getMatrix();
     }
 
 }

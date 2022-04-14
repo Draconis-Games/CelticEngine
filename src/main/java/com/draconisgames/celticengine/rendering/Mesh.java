@@ -1,5 +1,6 @@
 package com.draconisgames.celticengine.rendering;
 
+import com.draconisgames.celticengine.world.World;
 import org.lwjgl.opengl.GL15;
 
 import java.nio.FloatBuffer;
@@ -80,6 +81,9 @@ public class Mesh implements Renderable {
     @Override
     public void render() {
         shader.use();
+
+        shader.setMat4("transform", World.activeCam.getMatrix());
+
         glBindVertexArray(vaoID);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indicesId);
 

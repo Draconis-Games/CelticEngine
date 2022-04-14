@@ -4,6 +4,7 @@ import com.draconisgames.celticengine.file.TextLoader;
 import com.draconisgames.celticengine.physics.math.matrices.Matrix4f;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.lwjgl.BufferUtils;
 
 import java.nio.IntBuffer;
 import java.util.Arrays;
@@ -75,7 +76,9 @@ public class Shader {
 		int numOfUniforms = glGetProgrami(programId, GL_ACTIVE_UNIFORMS) + 1;
 
 		for (int i = 0; i < numOfUniforms; i++) {
-			String name = glGetActiveUniform(programId,i,IntBuffer.allocate(1), IntBuffer.allocate(1));
+			IntBuffer size = BufferUtils.createIntBuffer(2);
+			IntBuffer type = BufferUtils.createIntBuffer(2);
+			String name = glGetActiveUniform(programId,i, size, type);
 
 			int location = glGetUniformLocation(programId, name);
 
@@ -84,6 +87,7 @@ public class Shader {
 
 	}
 	public void setMat4(String name,Matrix4f mat4){
+		if (!uniforms.containsKey(name)) return;
 		use();
 		glUniformMatrix4fv(uniforms.get(name),false, mat4.toFlatArray());
 	}
