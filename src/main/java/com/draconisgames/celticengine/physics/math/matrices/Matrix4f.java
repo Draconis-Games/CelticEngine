@@ -2,6 +2,8 @@ package com.draconisgames.celticengine.physics.math.matrices;
 
 import com.draconisgames.celticengine.physics.math.*;
 
+import java.util.Arrays;
+
 import static java.lang.Math.sqrt;
 
 public class Matrix4f {
@@ -28,6 +30,16 @@ public class Matrix4f {
         matrix[2][0] = i; matrix[2][1] = j; matrix[2][2] = k; matrix[2][3] = l;
         matrix[3][0] = m; matrix[3][1] = n; matrix[3][2] = o; matrix[3][3] = p;
 
+    }
+
+    public float[] toFlatArray(){
+        float[] flatMap = new float[16];
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                flatMap[i+j*4] = matrix[i][j];
+            }
+        }
+        return flatMap;
     }
 
     public void multiply(Matrix4f m) {

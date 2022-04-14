@@ -62,6 +62,12 @@ public class Mesh implements Renderable {
         glEnableVertexAttribArray(1);
         glVertexAttribPointer(1, 3, GL_FLOAT, false, 0, 0);
 
+        uvVboId = glGenBuffers();
+        glBindBuffer(GL_ARRAY_BUFFER, uvVboId);
+        glBufferData(GL_ARRAY_BUFFER, normals, GL_STATIC_DRAW);
+        glEnableVertexAttribArray(2);
+        glVertexAttribPointer(2, 2, GL_FLOAT, false, 0, 0);
+
         // Index VBO
         indicesId = glGenBuffers();
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indicesId);
